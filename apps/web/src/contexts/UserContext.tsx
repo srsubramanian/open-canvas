@@ -1,4 +1,4 @@
-import { createSupabaseClient } from "@/lib/supabase/client";
+// import { createSupabaseClient } from "@/lib/supabase/client";
 import { User } from "@supabase/supabase-js";
 import {
   createContext,
@@ -17,29 +17,48 @@ type UserContentType = {
 const UserContext = createContext<UserContentType | undefined>(undefined);
 
 export function UserProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User>();
-  const [loading, setLoading] = useState(true);
+  // Mock user for authentication bypass
+  const mockUser: User = {
+    id: "mock-user-id",
+    app_metadata: {},
+    user_metadata: {},
+    aud: "authenticated",
+    created_at: new Date().toISOString(),
+    email: "mock@example.com",
+    email_confirmed_at: new Date().toISOString(),
+    phone: "",
+    confirmed_at: new Date().toISOString(),
+    last_sign_in_at: new Date().toISOString(),
+    role: "authenticated",
+    updated_at: new Date().toISOString(),
+  };
+
+  const [user] = useState<User>(mockUser);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (user || typeof window === "undefined") return;
-
-    getUser();
+    // No need to fetch user - using mock user
+    // if (user || typeof window === "undefined") return;
+    // getUser();
   }, []);
 
   async function getUser() {
-    if (user) {
-      setLoading(false);
-      return user;
-    }
-
-    const supabase = createSupabaseClient();
-
-    const {
-      data: { user: supabaseUser },
-    } = await supabase.auth.getUser();
-    setUser(supabaseUser || undefined);
+    // Always return mock user
     setLoading(false);
-    return supabaseUser || undefined;
+    return mockUser;
+    
+    // Original authentication code
+    // if (user) {
+    //   setLoading(false);
+    //   return user;
+    // }
+    // const supabase = createSupabaseClient();
+    // const {
+    //   data: { user: supabaseUser },
+    // } = await supabase.auth.getUser();
+    // setUser(supabaseUser || undefined);
+    // setLoading(false);
+    // return supabaseUser || undefined;
   }
 
   const contextValue: UserContentType = {

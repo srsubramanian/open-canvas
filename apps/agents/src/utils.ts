@@ -307,6 +307,7 @@ export function optionallyGetSystemPromptFromConfig(
   return config.configurable?.systemPrompt as string | undefined;
 }
 
+// @ts-expect-error - Function temporarily unused due to auth bypass
 async function getUserFromConfig(
   config: LangGraphRunnableConfig
 ): Promise<User | undefined> {
@@ -362,21 +363,23 @@ export async function getModelFromConfig(
     ...extra,
   };
 
+  // Authentication bypass - allow all models for mock user
   const isLangChainUserModel = LANGCHAIN_USER_ONLY_MODELS.some(
     (m) => m === modelName
   );
   if (isLangChainUserModel) {
-    const user = await getUserFromConfig(config);
-    if (!user) {
-      throw new Error(
-        "Unauthorized. Can not use LangChain only models without a user."
-      );
-    }
-    if (!user.email?.endsWith("@langchain.dev")) {
-      throw new Error(
-        "Unauthorized. Can not use LangChain only models without a user with a @langchain.dev email."
-      );
-    }
+    // Skip user check - authentication disabled
+    // const user = await getUserFromConfig(config);
+    // if (!user) {
+    //   throw new Error(
+    //     "Unauthorized. Can not use LangChain only models without a user."
+    //   );
+    // }
+    // if (!user.email?.endsWith("@langchain.dev")) {
+    //   throw new Error(
+    //     "Unauthorized. Can not use LangChain only models without a user with a @langchain.dev email."
+    //   );
+    // }
   }
 
   const includeStandardParams = !TEMPERATURE_EXCLUDED_MODELS.some(

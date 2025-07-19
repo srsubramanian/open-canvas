@@ -9,7 +9,7 @@ import { Thread } from "@langchain/langgraph-sdk";
 import { PiChatsCircleLight } from "react-icons/pi";
 import { TighterText } from "../ui/header";
 import { useGraphContext } from "@/contexts/GraphContext";
-import { useToast } from "@/hooks/use-toast";
+// import { useToast } from "@/hooks/use-toast";
 import React from "react";
 import { useUserContext } from "@/contexts/UserContext";
 import { useThreadContext } from "@/contexts/ThreadProvider";
@@ -195,7 +195,7 @@ function ThreadsList(props: ThreadsListProps) {
 }
 
 export function ThreadHistoryComponent(props: ThreadHistoryProps) {
-  const { toast } = useToast();
+  // const { toast } = useToast();
   const {
     graphData: { setMessages, switchSelectedThread },
   } = useGraphContext();
@@ -205,21 +205,24 @@ export function ThreadHistoryComponent(props: ThreadHistoryProps) {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    if (typeof window == "undefined" || userThreads.length || !user) return;
+    if (typeof window == "undefined" || userThreads.length) return;
+    // Authentication check removed - thread history works for mock user
+    // if (typeof window == "undefined" || userThreads.length || !user) return;
 
     getUserThreads();
   }, [user]);
 
   const handleDeleteThread = async (id: string) => {
-    if (!user) {
-      toast({
-        title: "Failed to delete thread",
-        description: "User not found",
-        duration: 5000,
-        variant: "destructive",
-      });
-      return;
-    }
+    // Authentication check removed
+    // if (!user) {
+    //   toast({
+    //     title: "Failed to delete thread",
+    //     description: "User not found",
+    //     duration: 5000,
+    //     variant: "destructive",
+    //   });
+    //   return;
+    // }
 
     await deleteThread(id, () => setMessages([]));
   };
