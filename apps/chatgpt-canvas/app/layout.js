@@ -1,8 +1,6 @@
-import { Inter } from 'next/font/google'
+import '@fontsource/inter'
 import { ThemeProvider } from '@/contexts/ThemeContext'
 import './globals.css'
-
-const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
   title: 'ChatGPT Canvas',
@@ -12,7 +10,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
+      <body className="font-inter">
         <ThemeProvider>
           {children}
         </ThemeProvider>

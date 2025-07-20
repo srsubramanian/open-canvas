@@ -19,7 +19,8 @@
     "postcss": "^8",
     "lucide-react": "^0.263.1",
     "clsx": "^2.0.0",
-    "class-variance-authority": "^0.7.0"
+    "class-variance-authority": "^0.7.0",
+    "@fontsource/inter": "^5.0.0"
   },
   "devDependencies": {
     "eslint": "^8",
