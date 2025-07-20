@@ -46,3 +46,4 @@ credentials.json
 # LangGraph API
 .langgraph_api
 /.idea/
+/apps/chatgpt-canvas/.next/
